@@ -1,13 +1,9 @@
 import { useState, useEffect } from 'react'
 import styles from './TaleGenerator.module.css'
+import generateTale from '../../application/generateTale.js'
+import FakeStoryGenerator from '../../infrastructure/FakeStoryGenerator.js'
 
-// fake async function to simulate backend call
-const fakeGenerateStory = (image, context) =>
-  new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(`Once upon a time, an image inspired a tale. ${context}`.trim())
-    }, 1500)
-  })
+const storyGenerator = new FakeStoryGenerator()
 
 export default function TaleGenerator() {
   const [file, setFile] = useState(null)
@@ -47,7 +43,7 @@ export default function TaleGenerator() {
     setLoading(true)
     setStory('')
     try {
-      const result = await fakeGenerateStory(file, context)
+      const result = await generateTale(storyGenerator, file, context)
       if (!result) {
         setError('Failed to generate tale')
       } else {
