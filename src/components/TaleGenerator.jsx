@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import styles from './TaleGenerator.module.css'
 
 // fake async function to simulate backend call
-const fakeGenerateStory = (image, context) =>
+export const fakeGenerateStory = (image, context) =>
   new Promise((resolve) => {
     setTimeout(() => {
       resolve(`Once upon a time, an image inspired a tale. ${context}`.trim())
