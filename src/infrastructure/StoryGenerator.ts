@@ -3,7 +3,17 @@ import { AzureKeyCredential } from '@azure/core-auth';
 import { IStoryGenerator } from '../domain/IStoryGenerator';
 
 export default class StoryGenerator implements IStoryGenerator {
-    async generate(imageUrl: string) {
+    async generate(imageUrl: string, context: string): Promise<string> {
+
+        if (!imageUrl) {
+            throw new Error('Image URL is required');
+        }
+
+        if (!context) {
+            throw new Error('Context is required');
+        }
+
+        console.log('Generating story from image and context:', {context});
 
         const features = [
             'Caption',
@@ -22,6 +32,9 @@ export default class StoryGenerator implements IStoryGenerator {
             contentType: 'application/json'
         });
 
+        const tale = "No tale generated from image.";
+        let caption = ""
+
         const iaResult = result.body;
 
         // if result is error response, return the error
@@ -32,9 +45,10 @@ export default class StoryGenerator implements IStoryGenerator {
 
         if (iaResult.captionResult) {
             console.log(`Caption: ${iaResult.captionResult.text} (confidence: ${iaResult.captionResult.confidence})`);
-            return iaResult.captionResult.text;
+            caption = iaResult.captionResult.text;
         }
-        return 'No caption found in the image.';
+        
+        return tale;
     }
 
     getClient() {
