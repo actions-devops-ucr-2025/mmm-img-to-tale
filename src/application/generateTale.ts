@@ -1,10 +1,9 @@
-import StoryGenerator from '../domain/StoryGenerator'
+import {IStoryGenerator} from '../domain/IStoryGenerator'
 
 export default async function generateTale(
-  storyGenerator: StoryGenerator,
-  image: string,
-  context: string
+  storyGenerator: IStoryGenerator,
+  image: string
 ): Promise<string> {
   if (!storyGenerator) throw new Error('StoryGenerator is required')
-  return storyGenerator.generate(image, context)
+  return storyGenerator.generate(image)
 }

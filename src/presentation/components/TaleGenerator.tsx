@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import styles from './TaleGenerator.module.css'
 import generateTale from '../../application/generateTale.js'
-import StoryGenerator from '../../domain/StoryGenerator.js'
+import StoryGenerator from '../../infrastructure/StoryGenerator'
 
 const storyGenerator = new StoryGenerator()
 
@@ -22,7 +22,7 @@ export default function TaleGenerator() {
     setPreview(imageUrl)
   }, [imageUrl])
 
-  const handleUrlChange = (e) => {
+  const handleUrlChange = (e: any) => {
     const url = e.target.value
     setStory('')
     setImageUrl(url)
@@ -37,13 +37,13 @@ export default function TaleGenerator() {
     setLoading(true)
     setStory('')
     try {
-      const result = await generateTale(storyGenerator, imageUrl, context)
+      const result = await generateTale(storyGenerator, imageUrl)
       if (!result) {
         setError('Failed to generate tale')
       } else {
         setStory(result)
       }
-    } catch (error) {
+    } catch (error: any) {
       setError(`Error generating tale: ${error.message}`)
       console.error('Error generating tale:', error)
     } finally {
