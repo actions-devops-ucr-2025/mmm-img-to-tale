@@ -46,8 +46,6 @@ export default class StoryGenerator implements IStoryGenerator {
         const endpoint = env.VITE_VISION_ENDPOINT
         const key = env.VITE_VISION_KEY
 
-        console.log('Using endpoint:', { endpoint, key });
-
         const credential = new AzureKeyCredential(key);
         return createClient(endpoint, credential);
     }
