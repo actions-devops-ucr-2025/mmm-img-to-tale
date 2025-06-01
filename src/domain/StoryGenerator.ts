@@ -2,7 +2,7 @@ import createClient from '@azure-rest/ai-vision-image-analysis';
 import { AzureKeyCredential } from '@azure/core-auth';
 
 export default class StoryGenerator {
-  async generate(imageUrl: string, context: string) {
+  async generate(imageUrl: string) {
     
     console.log('Generating story from image:', imageUrl);
 
