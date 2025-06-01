@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import generateTale from '../src/application/generateTale.js'
+import generateTale from '../src/application/generateTale'
 
 describe('generateTale', () => {
   it('throws an error when storyGenerator is missing', async () => {

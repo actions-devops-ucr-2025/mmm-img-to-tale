@@ -2,9 +2,9 @@ import createClient from '@azure-rest/ai-vision-image-analysis';
 import { AzureKeyCredential } from '@azure/core-auth';
 
 export default class StoryGenerator {
-  // eslint-disable-next-line no-unused-vars
-  async generate(_image, _context) {
-    console.log('Generating story from image:', _image);
+  async generate(imageUrl: string, context: string) {
+    
+    console.log('Generating story from image:', imageUrl);
 
     const features = [
       'Caption',
@@ -15,7 +15,7 @@ export default class StoryGenerator {
 
     const result = await client.path('/imageanalysis:analyze').post({
       body: {
-        url: _image,
+        url: imageUrl,
       },
       queryParameters: {
         features: features
@@ -25,14 +25,17 @@ export default class StoryGenerator {
 
     const iaResult = result.body;
 
+    // if result is error response, return the error
+    if (typeof iaResult === 'object' && 'error' in iaResult) {
+      console.error('Error analyzing image:', iaResult.error);
+      return `Error analyzing image: ${iaResult.error.message}`;
+    }
+
     console.log('Image Analysis Result:', JSON.stringify(iaResult, null, 2));
 
     if (iaResult.captionResult) {
       console.log(`Caption: ${iaResult.captionResult.text} (confidence: ${iaResult.captionResult.confidence})`);
       return iaResult.captionResult.text;
-    }
-    if (iaResult.readResult) {
-      iaResult.readResult.blocks.forEach(block => console.log(`Text Block: ${JSON.stringify(block)}`));
     }
     return 'No caption found in the image.';
   }
