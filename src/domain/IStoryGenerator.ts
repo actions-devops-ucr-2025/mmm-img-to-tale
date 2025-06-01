@@ -1,4 +1,4 @@
 export abstract class IStoryGenerator{
-  abstract generate(imageUrl: string): Promise<string>;
+  abstract generate(imageUrl: string, context: string): Promise<string>;
   abstract getClient(): any;
 }
