@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import styles from './TaleGenerator.module.css'
 import generateTale from '../../application/generateTale.js'
-import FakeStoryGenerator from '../../infrastructure/FakeStoryGenerator.js'
+import StoryGenerator from '../../domain/StoryGenerator.js'
 
-const storyGenerator = new FakeStoryGenerator()
+const storyGenerator = new StoryGenerator()
 
 export default function TaleGenerator() {
   const [imageUrl, setImageUrl] = useState('')
@@ -43,8 +43,9 @@ export default function TaleGenerator() {
       } else {
         setStory(result)
       }
-    } catch {
-      setError('An unexpected error occurred')
+    } catch (error) {
+      setError(`Error generating tale: ${error.message}`)
+      console.error('Error generating tale:', error)
     } finally {
       setLoading(false)
     }
