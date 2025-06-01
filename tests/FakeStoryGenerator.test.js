@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import FakeStoryGenerator from '../src/infrastructure/FakeStoryGenerator.js'
+import FakeStoryGenerator from '../src/infrastructure/FakeStoryGenerator'
 
 describe('FakeStoryGenerator', () => {
   it('generates a tale using the provided context', async () => {
