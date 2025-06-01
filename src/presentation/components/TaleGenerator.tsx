@@ -37,7 +37,7 @@ export default function TaleGenerator() {
     setLoading(true)
     setStory('')
     try {
-      const result = await generateTale(storyGenerator, imageUrl)
+      const result = await generateTale(storyGenerator, imageUrl, context)
       if (!result) {
         setError('Failed to generate tale')
       } else {
