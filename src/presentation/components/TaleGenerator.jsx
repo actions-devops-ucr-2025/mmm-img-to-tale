@@ -6,7 +6,7 @@ import FakeStoryGenerator from '../../infrastructure/FakeStoryGenerator.js'
 const storyGenerator = new FakeStoryGenerator()
 
 export default function TaleGenerator() {
-  const [file, setFile] = useState(null)
+  const [imageUrl, setImageUrl] = useState('')
   const [preview, setPreview] = useState('')
   const [context, setContext] = useState('')
   const [story, setStory] = useState('')
@@ -15,35 +15,29 @@ export default function TaleGenerator() {
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
-    if (!file) return
-    const objectUrl = URL.createObjectURL(file)
-    setPreview(objectUrl)
-    return () => URL.revokeObjectURL(objectUrl)
-  }, [file])
-
-  const handleFileChange = (e) => {
-    const selected = e.target.files?.[0]
-    setStory('')
-    if (!selected) return
-    if (!['image/jpeg', 'image/png'].includes(selected.type)) {
-      setError('Only JPG and PNG files are allowed')
-      e.target.value = ''
+    if (!imageUrl) {
+      setPreview('')
       return
     }
-    setError('')
-    setFile(selected)
+    setPreview(imageUrl)
+  }, [imageUrl])
+
+  const handleUrlChange = (e) => {
+    const url = e.target.value
+    setStory('')
+    setImageUrl(url)
   }
 
   const handleGenerate = async () => {
-    if (!file) {
-      setError('Please upload an image first')
+    if (!imageUrl) {
+      setError('Please provide an image URL first')
       return
     }
     setError('')
     setLoading(true)
     setStory('')
     try {
-      const result = await generateTale(storyGenerator, file, context)
+      const result = await generateTale(storyGenerator, imageUrl, context)
       if (!result) {
         setError('Failed to generate tale')
       } else {
@@ -70,9 +64,11 @@ export default function TaleGenerator() {
   return (
     <div className={styles.container}>
       <input
-        type="file"
-        accept="image/jpeg,image/png"
-        onChange={handleFileChange}
+        type="text"
+        placeholder="Image URL"
+        value={imageUrl}
+        onChange={handleUrlChange}
+        className={styles.textarea}
       />
       {preview && <img src={preview} alt="Preview" className={styles.preview} />}
       <textarea
