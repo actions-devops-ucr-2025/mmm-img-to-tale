@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import styles from './TaleGenerator.module.css'
 import generateTale from '../../application/generateTale.js'
-import StoryGenerator from '../../domain/StoryGenerator.js'
+import StoryGenerator from '../../infrastructure/StoryGenerator'
 
 const storyGenerator = new StoryGenerator()
 
@@ -22,7 +22,7 @@ export default function TaleGenerator() {
     setPreview(imageUrl)
   }, [imageUrl])
 
-  const handleUrlChange = (e) => {
+  const handleUrlChange = (e: any) => {
     const url = e.target.value
     setStory('')
     setImageUrl(url)

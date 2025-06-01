@@ -1,4 +1,4 @@
-import StoryGenerator from '../domain/StoryGenerator'
+import StoryGenerator from '../domain/IStoryGenerator'
 
 export default async function generateTale(
   storyGenerator: StoryGenerator,
