@@ -1,19 +1,9 @@
 import createClient from '@azure-rest/ai-vision-image-analysis';
 import { AzureKeyCredential } from '@azure/core-auth';
-import { IStoryGenerator } from '../domain/IStoryGenerator';
+import { ICaptionGenerator } from '../domain/ICaptionGenerator';
 
-export default class StoryGenerator implements IStoryGenerator {
-    async generate(imageUrl: string, context: string): Promise<string> {
-
-        if (!imageUrl) {
-            throw new Error('Image URL is required');
-        }
-
-        if (!context) {
-            throw new Error('Context is required');
-        }
-
-        console.log('Generating story from image and context:', {context});
+export default class CaptionGenerator implements ICaptionGenerator {
+    async generate(imageUrl: string): Promise<string> {
 
         const features = [
             'Caption',
@@ -31,8 +21,7 @@ export default class StoryGenerator implements IStoryGenerator {
             },
             contentType: 'application/json'
         });
-
-        const tale = "No tale generated from image.";
+        
         let caption = ""
 
         const iaResult = result.body;
@@ -47,8 +36,10 @@ export default class StoryGenerator implements IStoryGenerator {
             console.log(`Caption: ${iaResult.captionResult.text} (confidence: ${iaResult.captionResult.confidence})`);
             caption = iaResult.captionResult.text;
         }
+
+        console.log('Caption:', caption);
         
-        return tale;
+        return caption;
     }
 
     getClient() {
