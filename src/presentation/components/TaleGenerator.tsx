@@ -2,6 +2,15 @@ import { useState, useEffect } from 'react'
 import styles from './TaleGenerator.module.css'
 import generateTale from '../../application/generateTale.js'
 
+function isValidUrl(value: string) {
+  try {
+    new URL(value)
+    return true
+  } catch {
+    return false
+  }
+}
+
 export default function TaleGenerator() {
   const [imageUrl, setImageUrl] = useState('')
   const [preview, setPreview] = useState('')
@@ -23,11 +32,32 @@ export default function TaleGenerator() {
     const url = e.target.value
     setStory('')
     setImageUrl(url)
+    if (url && !isValidUrl(url)) {
+      setError('Please provide a valid URL')
+    } else {
+      setError('')
+    }
+  }
+
+  const handleContextChange = (e: any) => {
+    const value = e.target.value
+    const words = value.trim().split(/\s+/)
+    if (words.filter(Boolean).length > 100) {
+      setContext(words.slice(0, 100).join(' '))
+      setError('Context cannot exceed 100 words')
+    } else {
+      setError('')
+      setContext(value)
+    }
   }
 
   const handleGenerate = async () => {
-    if (!imageUrl) {
-      setError('Please provide an image URL first')
+    if (!imageUrl || !isValidUrl(imageUrl)) {
+      setError('Please provide a valid image URL first')
+      return
+    }
+    if (context.trim().split(/\s+/).filter(Boolean).length > 100) {
+      setError('Context cannot exceed 100 words')
       return
     }
     setError('')
@@ -66,13 +96,13 @@ export default function TaleGenerator() {
         placeholder="Image URL"
         value={imageUrl}
         onChange={handleUrlChange}
-        className={styles.textarea}
+        className={styles.input}
       />
       {preview && <img src={preview} alt="Preview" className={styles.preview} />}
       <textarea
         placeholder="Tale Context"
         value={context}
-        onChange={(e) => setContext(e.target.value)}
+        onChange={handleContextChange}
         className={styles.textarea}
       />
       <button onClick={handleGenerate} className={styles.button}>
