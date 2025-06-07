@@ -19,7 +19,7 @@ export class TaleGenerator implements ITaleGenerator {
                     Eres un experto en generar cuentos a partir de un caption de una imagen y un breve contexto.
                     El cuento debe ser creativo, interesante y relacionado con el caption y el contexto proporcionados.
                     El cuento debe tener una estructura narrativa coherente, con un inicio, desarrollo y desenlace.
-                    El cuento deber ser fiel al caption y al contexto proporcionados.
+                    El cuento deber ser fiel al caption y al contexto proporcionados en español. Traduce el caption y el contexto al español si es necesario.
                     El caption debe aparecer en el cuento de forma natural y relevante.
                     Este es el caption de la imagen: "${caption}".
                     Este es el contexto: "${context}".
