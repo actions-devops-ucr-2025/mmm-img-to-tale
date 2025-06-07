@@ -1,15 +1,17 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import TaleGenerator from '../TaleGenerator';
+import { vi, describe, beforeEach, test, expect } from 'vitest';
 
-jest.mock('../../../application/generateTale.js', () => ({
-  __esModule: true,
-  default: jest.fn()
+// Use vi.mock instead of jest.mock
+vi.mock('../../../application/generateTale.js', () => ({
+  default: vi.fn()
 }));
 
+// Import after mocking
 import generateTale from '../../../application/generateTale.js';
 
-const mockedGenerateTale = generateTale as jest.MockedFunction<typeof generateTale>;
+// Use Vitest's typing for mocked function
+const mockedGenerateTale = generateTale as ReturnType<typeof vi.fn>;
 
 describe('TaleGenerator component', () => {
   beforeEach(() => {
@@ -29,7 +31,9 @@ describe('TaleGenerator component', () => {
     fireEvent.change(screen.getByPlaceholderText('Image URL'), { target: { value: 'http://example.com/img.jpg' } });
     fireEvent.change(screen.getByPlaceholderText('Tale Context'), { target: { value: 'Once upon a time' } });
     fireEvent.click(screen.getByText('Generate Tale'));
-    await waitFor(() => expect(mockedGenerateTale).toHaveBeenCalledWith('http://example.com/img.jpg', 'Once upon a time'));
+    await waitFor(() =>
+      expect(mockedGenerateTale).toHaveBeenCalledWith('http://example.com/img.jpg', 'Once upon a time')
+    );
     expect(screen.getByDisplayValue('A great story')).toBeInTheDocument();
   });
 });
