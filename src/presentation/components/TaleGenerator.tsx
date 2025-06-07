@@ -91,27 +91,44 @@ export default function TaleGenerator() {
 
   return (
     <div className={styles.container}>
+      {/* Image URL Input */}
+      <label htmlFor="image-url" className={styles.label}>Image URL</label>
       <input
+        id="image-url"
         type="text"
         placeholder="Image URL"
         value={imageUrl}
         onChange={handleUrlChange}
         className={styles.input}
       />
+
+      {/* Image Preview */}
       {preview && <img src={preview} alt="Preview" className={styles.preview} />}
+
+      {/* Tale Context Textarea */}
+      <label htmlFor="tale-context" className={styles.label}>Tale Context</label>
       <textarea
+        id="tale-context"
         placeholder="Tale Context"
         value={context}
         onChange={handleContextChange}
         className={styles.textarea}
       />
+
+      {/* Generate Button */}
       <button onClick={handleGenerate} className={styles.button}>
         {loading ? 'Generating...' : 'Generate Tale'}
       </button>
+
+      {/* Error Message */}
       {error && <p className={styles.error}>{error}</p>}
+
+      {/* Story Output */}
       {story && (
         <div className={styles.outputWrapper}>
+          <label htmlFor="generated-story" className={styles.label}>Generated Tale</label>
           <textarea
+            id="generated-story"
             readOnly
             value={story}
             className={styles.story}
