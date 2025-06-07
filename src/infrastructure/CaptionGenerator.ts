@@ -5,10 +5,7 @@ import { ICaptionGenerator } from '../domain/ICaptionGenerator';
 export default class CaptionGenerator implements ICaptionGenerator {
     async generate(imageUrl: string): Promise<string> {
 
-        const features = [
-            'Caption',
-            'Read'
-        ];
+        const features = ["Caption", "DenseCaptions", "Objects", "People", "Read", "SmartCrops", "Tags"];
 
         const client = this.getClient();
 
@@ -17,7 +14,8 @@ export default class CaptionGenerator implements ICaptionGenerator {
                 url: imageUrl,
             },
             queryParameters: {
-                features: features
+                features: features,
+                "smartCrops-aspect-ratios": [0.9, 1.33],
             },
             contentType: 'application/json'
         });
@@ -26,6 +24,8 @@ export default class CaptionGenerator implements ICaptionGenerator {
 
         const iaResult = result.body;
 
+        console.log('Image Analysis Result:', iaResult);
+
         // if result is error response, return the error
         if (typeof iaResult === 'object' && 'error' in iaResult) {
             console.error('Error analyzing image:', iaResult.error);
@@ -33,8 +33,21 @@ export default class CaptionGenerator implements ICaptionGenerator {
         }
 
         if (iaResult.captionResult) {
-            console.log(`Caption: ${iaResult.captionResult.text} (confidence: ${iaResult.captionResult.confidence})`);
-            caption = iaResult.captionResult.text;
+            caption += "Short Caption: "+ iaResult.captionResult.text + "\n";
+        }
+
+        if (iaResult.denseCaptionsResult) {
+            iaResult.denseCaptionsResult.values.forEach((denseCaption: any) => {
+                caption += `Dense Caption: ${denseCaption.text}\n`;
+            });
+        }
+
+        if (iaResult.readResult) {
+            iaResult.readResult.blocks.forEach((element: any) => {
+                element.lines.forEach((line: any) => {
+                    caption += `Read Text: ${line.text}\n`;
+                });
+            });
         }
 
         console.log('Caption:', caption);
