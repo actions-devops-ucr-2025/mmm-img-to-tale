@@ -1,0 +1,17 @@
+name: Simple Steps Workflow
+
+on:
+    workflow_dispatch:
+
+jobs:
+    log-steps:
+        runs-on: macos-latest
+        steps:
+            - name: Step 1 - Log step number
+              run: echo "This is step 1"
+
+            - name: Step 2 - Log step number
+              run: echo "This is step 2"
+
+            - name: Step 3 - Log step number
+              run: echo "This is step 3"
