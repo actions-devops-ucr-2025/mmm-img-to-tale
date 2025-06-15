@@ -1,4 +1,4 @@
-name: first action
+name: First Action
 
 on:
     workflow_dispatch:
