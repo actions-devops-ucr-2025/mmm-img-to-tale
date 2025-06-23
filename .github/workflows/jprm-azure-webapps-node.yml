@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 env:
   AZURE_WEBAPP_NAME: ${{secrets.AZURE_WEBAPP_NAME}}
-  AZURE_WEBAPP_PACKAGE_PATH: './dist'      
+  AZURE_WEBAPP_PACKAGE_PATH: './node-app.zip'      
   NODE_VERSION: '22.x'                
 permissions:
   contents: read
