@@ -1,7 +1,5 @@
 name: JPRM - Azure WebApp Deployment
 on:
-  push:
-    branches: [ "release-*" ]
   workflow_dispatch:
 env:
   AZURE_WEBAPP_NAME: ${{secrets.AZURE_WEBAPP_NAME}}
