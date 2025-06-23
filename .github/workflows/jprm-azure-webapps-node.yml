@@ -7,6 +7,12 @@ permissions:
   contents: read
 jobs:
   build:
+    env:
+      VITE_VISION_ENDPOINT: ${{ secrets.VITE_VISION_ENDPOINT }}
+      VITE_VISION_KEY: ${{ secrets.VITE_VISION_KEY }}
+      VITE_OPENAI_API_KEY: ${{ secrets.VITE_OPENAI_API_KEY }}
+      VITE_OPENAI_ENDPOINT: ${{ secrets.VITE_OPENAI_ENDPOINT }}
+      VITE_OPENAI_MODEL_NAME: ${{ secrets.VITE_OPENAI_MODEL_NAME }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
