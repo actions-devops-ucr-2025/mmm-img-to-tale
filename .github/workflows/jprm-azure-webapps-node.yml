@@ -1,3 +1,4 @@
+name: JPRM - Azure WebApp Deployment
 on:
   push:
     branches: [ "release-*" ]
