@@ -5,6 +5,7 @@ on:
 
 env:
   ENV_VAR: ${{ vars.GLOBAL_VAR }}
+  name: test
 
 jobs:
   show-vars:
