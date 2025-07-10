@@ -1,0 +1,20 @@
+name: Advanced Environment Variables
+
+on:
+  workflow_dispatch:
+
+env:
+  ENV_VAR: ${{ vars.GLOBAL_VAR }}
+
+jobs:
+  show-vars:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print variables
+        run: |
+          echo "Global variable: $ENV_VAR"
+          echo "Repository variable: $REPO_VAR"
+          echo "Organization variable: $ORG_VAR"
+        env:
+          REPO_VAR: ${{ vars.REPO_VAR }}
+          ORG_VAR: ${{ vars.ORG_VAR }}
