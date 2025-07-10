@@ -8,12 +8,12 @@ jobs:
     environment: 
       name: "development"
     steps:
-      - name: Print variables
+      - name: Print env variables
         run: |
           echo "Echo url from env: $URL"
           echo "Echo name from env: $NAME"
           echo "Echo last name from vars: $LAST_NAME"
         env:
-          URL: ${{ env.URL }}
-          NAME: ${{ env.NAME }}
+          URL: ${{ vars.URL }}
+          NAME: ${{ vars.NAME }}
           LAST_NAME: ${{ vars.LAST_NAME }}
