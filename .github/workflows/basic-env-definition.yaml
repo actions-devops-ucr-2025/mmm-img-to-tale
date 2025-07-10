@@ -1,4 +1,4 @@
-name: Advanced Environment Variables
+name: Basic Environment Definition
 
 on:
   workflow_dispatch:
