@@ -1,0 +1,22 @@
+name: Basic Environment Variables
+
+on:
+  workflow_dispatch
+
+env:
+  DAY_OF_WEEK: Friday  # Workflow-level env var
+
+jobs:
+  greeting_job:
+    runs-on: ubuntu-latest
+    env:
+      GREETING: "Hola!"  # Job-level env var
+
+    steps:
+      - name: "Greet the user with all env levels"
+        run: echo "$GREETING $FIRST_NAME! Today is $DAY_OF_WEEK. Enjoy your day!"
+        env:
+          FIRST_NAME: "Pablo"  # Step-level env var
+
+      - name: "Show all envs using printenv"
+        run: printenv | grep -E 'GREETING|FIRST_NAME|DAY_OF_WEEK'
