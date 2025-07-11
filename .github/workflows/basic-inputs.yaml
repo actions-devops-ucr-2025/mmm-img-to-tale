@@ -1,0 +1,37 @@
+name: Basic Inputs
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Your name'
+        required: true
+        default: 'Mona'
+        type: string
+
+      environment:
+        description: 'Choose environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+          - development
+
+      run_tests:
+        description: 'Run tests before deploy?'
+        required: true
+        default: true
+        type: boolean
+
+jobs:
+  show-inputs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Display input values
+        run: |
+          echo "Name: ${{ inputs.name }}"
+          echo "Selected environment: ${{ inputs.environment }}"
+          echo "Run tests? ${{ inputs.run_tests }}"
